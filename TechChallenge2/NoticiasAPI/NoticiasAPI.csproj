@@ -6,12 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>49d87d94-a622-40ee-ac4e-5a0a05097670</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <ApplicationInsightsResourceId>/subscriptions/71777a33-23c4-4f1c-99aa-c08bdda36e76/resourceGroups/rg-fiapdotnet/providers/microsoft.insights/components/aitechchallenge</ApplicationInsightsResourceId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="12.0.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="ElmahCore" Version="2.1.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.15.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.10" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />

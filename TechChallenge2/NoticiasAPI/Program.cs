@@ -21,7 +21,7 @@ builder.Services.AddScoped<IEmailService, BrevoEmailService>();
 
 //HttpClient
 builder.Services.AddHttpClient<AuthenticateController>();
-builder.Services.AddHttpClient<NoticiaController>();
+builder.Services.AddHttpClient<NoticiasController>();
 
 builder.Services.AddDIAuthentication(builder);
 
@@ -67,6 +67,7 @@ builder.Services.AddHttpClient("Brevo", c =>
 	c.DefaultRequestHeaders.Add("api-key", "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");
 	c.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 });
+builder.Services.AddApplicationInsightsTelemetry(builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]);
 
 var app = builder.Build();
 
@@ -83,10 +84,19 @@ using (var scope = app.Services.CreateScope())
     identityContext.Database.Migrate();
 }
 
+var aiOptions = new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions();
+
+// Disables adaptive sampling.
+aiOptions.EnableAdaptiveSampling = false;
+
+// Disables QuickPulse (Live Metrics stream).
+aiOptions.EnableQuickPulseMetricStream = false;
+
+builder.Services.AddApplicationInsightsTelemetry(aiOptions);
 
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseSwagger();
+app.UseSwagger();
     app.UseSwaggerUI();
 //}
 
