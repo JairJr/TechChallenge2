@@ -15,3 +15,6 @@ Adicionamos a funcionalidade de testes de integração com o [NEWMAN](https://le
 ![Resultado da execução do NEWMAN](https://github.com/JairJr/TechChallenge2/assets/29376086/7c5559c9-cfa2-442c-bf2e-c5ec8f8dc6ba)
 
 Adicionamos o Application Insights para monitoramento da aplicação
+
+![image](https://github.com/JairJr/TechChallenge2/assets/29376086/9a9de0c4-e7d6-48ed-9006-9955576de6da)
+
