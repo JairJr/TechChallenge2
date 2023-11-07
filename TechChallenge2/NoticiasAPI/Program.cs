@@ -84,16 +84,6 @@ using (var scope = app.Services.CreateScope())
     identityContext.Database.Migrate();
 }
 
-var aiOptions = new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions();
-
-// Disables adaptive sampling.
-aiOptions.EnableAdaptiveSampling = false;
-
-// Disables QuickPulse (Live Metrics stream).
-aiOptions.EnableQuickPulseMetricStream = false;
-
-builder.Services.AddApplicationInsightsTelemetry(aiOptions);
-
 //if (app.Environment.IsDevelopment())
 //{
 app.UseSwagger();
