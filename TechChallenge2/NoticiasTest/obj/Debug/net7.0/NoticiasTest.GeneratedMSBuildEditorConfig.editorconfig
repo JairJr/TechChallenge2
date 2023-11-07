@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = NoticiasTest
-build_property.ProjectDir = D:\Projetos\FIAP\blog\TechChallenge2\TechChallenge2\NoticiasTest\
+build_property.ProjectDir = D:\Dev\Fiap\Tech2Github\TechChallenge2\NoticiasTest\

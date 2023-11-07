@@ -14,19 +14,19 @@ public class NoticiaService : INoticiaService
     {
         _context = context;
     }
-    public bool CreateNoticia(Noticia noticia)
+    public int? CreateNoticia(Noticia noticia)
     {
         try
         {
             _context.Noticias.Add(noticia);
             _context.SaveChanges();            
-            return true;
+            return noticia.Id;
         }
         catch (Exception ex)
         {
             //TODO: logar a mensagem do exception
             ElmahExtensions.RaiseError(new Exception(ex.Message));
-            return false;
+            return null;
         }
     }
 
@@ -59,8 +59,9 @@ public class NoticiaService : INoticiaService
             {
                 _context.Noticias.Remove(noticia);
                 _context.SaveChanges();
-            }
             return true;
+            }
+            return false;
         }
         catch (Exception ex)
         {

@@ -1,0 +1,536 @@
+{
+	"info": {
+		"_postman_id": "1d87da47-f871-46da-8017-297caca6c816",
+		"name": "NoticiasAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6639291"
+	},
+	"item": [
+		{
+			"name": "api",
+			"item": [
+				{
+					"name": "Authenticate",
+					"item": [
+						{
+							"name": "register",
+							"item": [
+								{
+									"name": "/api/Authenticate/register",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Retorno OK Cadastrar Usuário\", function() {\r",
+													"    pm.response.to.be.ok;\r",
+													"});\r",
+													"var result = pm.response.json();\r",
+													"pm.test(\"Valida se foi criado com sucesso\", function(){\r",
+													"    pm.expect(result.success).true;\r",
+													"    pm.expect(result.message).contains(\"Usuário criado com sucesso!\");\r",
+													"})"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"let userName = pm.variables.replaceIn(\"{{$randomUserName}}\")\r",
+													"pm.collectionVariables.set(\"UserName\", userName);\r",
+													"pm.environment.set(\"email\", `${userName.toLowerCase()}+@teste.com`);\r",
+													"console.log(userName);"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"userName\": \"{{UserName}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"SenhaSegura01!\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Authenticate/register",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Authenticate",
+												"register"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "login",
+							"item": [
+								{
+									"name": "/api/Authenticate/login",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Retorno OK Login Usuário\", function() {\r",
+													"    pm.response.to.be.ok;\r",
+													"});\r",
+													"var result = pm.response.json();\r",
+													"pm.test(\"Valida se foi login com sucesso\", function(){\r",
+													"    pm.expect(result.success).true;        \r",
+													"    if(pm.response.code === 200) {    \r",
+													"        pm.collectionVariables.set(\"access_token\", result.data.token);    \r",
+													"    }\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{  \n  \"password\": \"SenhaSegura01!\",\n  \"userName\": \"{{UserName}}\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/Authenticate/login",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Authenticate",
+												"login"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "authenticated",
+							"item": [
+								{
+									"name": "/api/Authenticate/authenticated",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Retorno OK\", function() {\r",
+													"    pm.response.to.be.ok;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "text/plain"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/api/Authenticate/authenticated",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"Authenticate",
+												"authenticated"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Noticia",
+					"item": [
+						{
+							"name": "01 - cadastro",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Retorno OK\", function() {\r",
+											"    pm.response.to.be.success;\r",
+											"});\r",
+											"pm.test(\"Obtem o id do item criado\", function(){      \r",
+											"    if(pm.response.code === 201) {    \r",
+											"        pm.collectionVariables.set(\"id_noticia\", pm.response.json());    \r",
+											"        console.log(pm.response.json())\r",
+											"    }\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"titulo\": \"Teste\",\n  \"descricao\": \"Teste 2\",\n  \"chapeu\": \"Teste chaper\",\n  \"dataPublicacao\": \"2023-09-10T04:13:32.864Z\",\n  \"autor\": \"Tester\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Noticias",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Noticias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "02 - Obtem todas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Retorno OK\", function() {\r",
+											"    pm.response.to.be.ok;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Noticias",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Noticias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "03 - Atualiza",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Retorno OK\", function() {\r",
+											"    pm.response.to.be.ok;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": {{id_noticia}},\n    \"titulo\": \"Teste 2\",\n    \"descricao\": \"Teste 2\",\n    \"chapeu\": \"Teste chaper\",\n    \"dataPublicacao\": \"2023-09-10T04:13:32.864\",\n    \"autor\": \"Tester\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/Noticias",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Noticias"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "04 - Obtem especifica",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Retorno OK\", function() {\r",
+											"    pm.response.to.be.ok;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Noticias/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Noticias",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id_noticia}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "05 - Remove especifica",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Deleta a Noticia criada\", function() {\r",
+											"    pm.response.to.be.success;\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/api/Noticias/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"Noticias",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "{{id_noticia}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{bearerToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "jwtToken",
+			"value": " "
+		},
+		{
+			"key": "id_noticia",
+			"value": ""
+		},
+		{
+			"key": "UserName",
+			"value": ""
+		},
+		{
+			"key": "email",
+			"value": ""
+		}
+	]
+}

@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Identidade.API.Extensions;
-using Serilog;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Text;
 using TechChallenge.NoticiasAPI.Data;
 
@@ -47,7 +44,7 @@ namespace TechChallenge.Identity.Extensions
 
             return services;
         }
-
+             
         public static IServiceCollection AddDICors(this IServiceCollection services, WebApplicationBuilder? builder)
         {
             //cors

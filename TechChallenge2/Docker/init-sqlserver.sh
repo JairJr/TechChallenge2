@@ -1,0 +1,1 @@
+/opt/mssql-tools/bin/sqlcmd -S sqlserver -U sa -P P@55w0rd -d master -i /tmp/BaseSuporte.sql

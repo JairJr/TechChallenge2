@@ -1,0 +1,50 @@
+# services:
+  # sql-server:
+  #   image: mcr.microsoft.com/mssql/server:2019-latest
+  #   environment:
+  #     SA_PASSWORD: "P@55w0rd"
+  #     ACCEPT_EULA: Y
+  #   ports:
+  #     - "1433:1433"
+  #   networks:
+  #     - mynetwork
+    # command: sleep 90s  
+    # volumes:
+    #   - ./create-database.sql:/docker-entrypoint-initdb.d/create-database.sql
+    # command: ["/opt/mssql-tools/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "P@55w0rd", "-i", "/docker-entrypoint-initdb.d/create-database.sql"]
+
+services:
+  database:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: database
+    ports:
+      - 1433:1433
+    volumes:
+      - /var/opt/mssql
+      - ./schema.sql:/usr/src/app/schema.sql
+    environment:
+      MSSQL_SA_PASSWORD : "P@55w0rd"
+      ACCEPT_EULA: "Y"
+      MSSQL_TCP_PORT: 1433
+      MSSQL_TCP_ADDR: 0.0.0.0
+    command: /opt/mssql-tools/bin/sqlcmd -S localhost -U SA -P "P@55w0rd" -i /usr/src/app/schema.sql
+    # healthcheck:
+    #    test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'P@55w0rd' -Q 'SELECT 1' || exit 1"]
+    #    interval: 10s
+    #    retries: 10
+    #    start_period: 10s
+    #    timeout: 3s 
+
+  web-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on: 
+      - database
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

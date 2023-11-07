@@ -1,0 +1,36 @@
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "P@55w0rd"
+      ACCEPT_EULA: Y
+      MSSQL_PID: "Developer"
+    ports:
+      - "1433:1433"
+    networks:
+      - mynetwork
+
+  mssqltools:
+    image: mcr.microsoft.com/mssql-tools
+    depends_on:
+      - sqlserver
+    volumes:
+      - ./BaseSuporte.sql:/tmp/BaseSuporte.sql
+      - ./init-sqlserver.sh:/tmp/init-sqlserver.sh
+    command: /bin/bash ./tmp/init-sqlserver.sh
+    networks:
+      - mynetwork
+
+  web-api:
+    build:
+      context: ../
+      dockerfile: NoticiasAPI/Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - sql-server
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
