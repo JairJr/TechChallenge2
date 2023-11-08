@@ -33,7 +33,7 @@ jobs:
     - name: Testes da API REST com Newman
       run: |
         cd ${{ env.CAMINHO_TESTES }}
-        newman run NoticiasAPI.postman_collection.json --insecure
+        newman run NoticiasAPI.postman_collection.json
       
     - name: Login no Azure Container Registry
       uses: docker/login-action@v1.8.0
