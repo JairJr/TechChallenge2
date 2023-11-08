@@ -66,10 +66,12 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/Authenticate/register",
+											"raw": "http://localhost:5000/api/Authenticate/register",
+											"protocol": "http",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "5000",
 											"path": [
 												"api",
 												"Authenticate",
@@ -144,10 +146,12 @@
 											}
 										},
 										"url": {
-											"raw": "{{baseUrl}}/api/Authenticate/login",
+											"raw": "http://localhost:5000/api/Authenticate/login",
+											"protocol": "http",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "5000",
 											"path": [
 												"api",
 												"Authenticate",
@@ -196,10 +200,12 @@
 											}
 										],
 										"url": {
-											"raw": "{{baseUrl}}/api/Authenticate/authenticated",
+											"raw": "http://localhost:5000/api/Authenticate/authenticated",
+											"protocol": "http",
 											"host": [
-												"{{baseUrl}}"
+												"localhost"
 											],
+											"port": "5000",
 											"path": [
 												"api",
 												"Authenticate",
@@ -266,10 +272,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/Noticias",
+									"raw": "http://localhost:5000/api/Noticias",
+									"protocol": "http",
 									"host": [
-										"{{baseUrl}}"
+										"localhost"
 									],
+									"port": "5000",
 									"path": [
 										"api",
 										"Noticias"
@@ -307,10 +315,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/Noticias",
+									"raw": "http://localhost:5000/api/Noticias",
+									"protocol": "http",
 									"host": [
-										"{{baseUrl}}"
+										"localhost"
 									],
+									"port": "5000",
 									"path": [
 										"api",
 										"Noticias"
@@ -363,10 +373,12 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/Noticias",
+									"raw": "http://localhost:5000/api/Noticias",
+									"protocol": "http",
 									"host": [
-										"{{baseUrl}}"
+										"localhost"
 									],
+									"port": "5000",
 									"path": [
 										"api",
 										"Noticias"
@@ -404,10 +416,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/Noticias/:id",
+									"raw": "http://localhost:5000/api/Noticias/:id",
+									"protocol": "http",
 									"host": [
-										"{{baseUrl}}"
+										"localhost"
 									],
+									"port": "5000",
 									"path": [
 										"api",
 										"Noticias",
@@ -452,10 +466,12 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{baseUrl}}/api/Noticias/:id",
+									"raw": "http://localhost:5000/api/Noticias/:id",
+									"protocol": "http",
 									"host": [
-										"{{baseUrl}}"
+										"localhost"
 									],
+									"port": "5000",
 									"path": [
 										"api",
 										"Noticias",
