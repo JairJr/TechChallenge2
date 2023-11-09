@@ -22,6 +22,7 @@ jobs:
 
     - name: Replace Connection String
       run: |
+        cd ${{ env.CAMINHO_PROJETO_WEBAPP }}
         sed -i 's|{{secrets.SQL_SERVER_CONNSTRING}}|'"$secrets.SQL_SERVER_CONNSTRING"'|' appsettings.json 
         sed -i 's|{{secrets.SQL_SERVER_CONNSTRING}}|'"$secrets.SQL_SERVER_CONNSTRING"'|' appsettings.Development.json 
       env:
