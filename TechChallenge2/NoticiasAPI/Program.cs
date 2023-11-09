@@ -8,13 +8,18 @@ using NoticiasAPI.Service;
 using ElmahCore.Mvc;
 using ElmahCore;
 using System.Net.Http.Headers;
+using Microsoft.Extensions.Configuration;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 //AddDbContext
-builder.Services.AddDbContext<NoticiasContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("AppNoticiasConnection")));
-
-builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("IdentityConnection")));
+// Decode a Connection String em Base64
+string base64EncodedConnectionString = builder.Configuration.GetConnectionString("AppNoticiasConnection") ?? string.Empty;
+byte[] bytes = Convert.FromBase64String(base64EncodedConnectionString);
+string connectionString = Encoding.UTF8.GetString(bytes);
+builder.Services.AddDbContext<NoticiasContext>(opt => opt.UseSqlServer(connectionString));
+builder.Services.AddDbContext<IdentityContext>(options => options.UseSqlServer(connectionString));
 
 //services
 builder.Services.AddScoped<IEmailService, BrevoEmailService>();
