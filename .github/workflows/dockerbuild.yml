@@ -24,16 +24,17 @@ jobs:
     - name: Replace Connection String
       run: |
         cd ${{ env.CAMINHO_PROJETO_WEBAPP }}
-        sed -i 's|${{ secrets.SQL_SERVER_CONNSTRING }}|'"$SQL_SERVER_CONNSTRING"'|' appsettings.json 
-        sed -i 's|${{ secrets.SQL_SERVER_CONNSTRING }}|'"$SQL_SERVER_CONNSTRING"'|' appsettings.Development.json 
+        sed -i 's/SQL_SERVER_CONNSTRING/${{ env.SQL_SERVER_CONNSTRING }}/' appsettings.json 
+        sed -i 's/SQL_SERVER_CONNSTRING/'"${{ env.SQL_SERVER_CONNSTRING }}"'/' appsettings.Development.json 
         cat appsettings.json
+        cat appsettings.Development.json
 
     - name: Build de imagem
       run: |
         cd ${{ env.CAMINHO_PROJETO_WEBAPP }}
         docker build . --file Dockerfile --tag ${{ env.IMAGEM_AZURECR }}:latest
   
-    - name: Criação de container para testes com a API
+    - name: Criacao de container para testes com a API
       run: |
         docker run --name api-testes -p 5000:80 -d ${{ env.IMAGEM_AZURECR }}:latest
         docker container ls
@@ -50,7 +51,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Geração de tag com número do Build e Push no Azure Container Registry
+    - name: Geracao de tag com numero do Build e Push no Azure Container Registry
       run: |
         docker tag ${{ env.IMAGEM_AZURECR }}:latest ${{ env.IMAGEM_AZURECR }}:$GITHUB_RUN_NUMBER
         docker push --all-tags ${{ env.IMAGEM_AZURECR }}
