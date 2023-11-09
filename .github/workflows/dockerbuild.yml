@@ -26,8 +26,7 @@ jobs:
         cd ${{ env.CAMINHO_PROJETO_WEBAPP }}
         sed -i 's|${{ secrets.SQL_SERVER_CONNSTRING }}|'"$SQL_SERVER_CONNSTRING"'|' appsettings.json 
         sed -i 's|${{ secrets.SQL_SERVER_CONNSTRING }}|'"$SQL_SERVER_CONNSTRING"'|' appsettings.Development.json 
-      env:
-        CONNECTION_STRING: ${{ secrets.SQL_SERVER_CONNSTRING }}
+        cat appsettings.json
 
     - name: Build de imagem
       run: |
