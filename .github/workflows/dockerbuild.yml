@@ -22,10 +22,14 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Set Connection String
-      run: echo "CONNECTION_STRING=${{ secrets.SQL_SERVER_CONNSTRING }}" >> $GITHUB_ENV
+      run: |
+        cd ${{ env.CAMINHO_PROJETO_WEBAPP }} 
+        echo "CONNECTION_STRING=${{ secrets.SQL_SERVER_CONNSTRING }}" >> $GITHUB_ENV
 
     - name: Update appsettings.json
-      run: jq --arg connStr "${{ env.CONNECTION_STRING }}" '.ConnectionStrings.AppNoticiasConnection = $connStr' appsettings.json > appsettings.json.tmp && mv appsettings.json.tmp appsettings.json
+      run: |
+        cd ${{ env.CAMINHO_PROJETO_WEBAPP }}
+        jq --arg connStr "${{ env.CONNECTION_STRING }}" '.ConnectionStrings.AppNoticiasConnection = $connStr' appsettings.json > appsettings.json.tmp && mv appsettings.json.tmp appsettings.json
 
     - name: Build de imagem
       run: |
