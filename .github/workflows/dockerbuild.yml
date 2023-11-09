@@ -11,6 +11,7 @@ env:
   IMAGEM_AZURECR: ${{ secrets.DOCKER_CONTEINER_REGISTRY }}/apinoticias-newman
   CAMINHO_PROJETO_WEBAPP: ./TechChallenge2/NoticiasAPI
   CAMINHO_TESTES: ./TechChallenge2/Postman
+  SQL_SERVER_CONNSTRING: ${{ secrets.SQL_SERVER_CONNSTRING }}
 
 jobs:
   build-tests-push:
