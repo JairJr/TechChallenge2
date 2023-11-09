@@ -21,13 +21,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Replace Connection String
-      run: |
-        cd ${{ env.CAMINHO_PROJETO_WEBAPP }}
-        sed -i 's|SQL_SERVER_CONNSTRING|'"${{ env.SQL_SERVER_CONNSTRING }}"'|' appsettings.json        
-        cat appsettings.json
-        sed -i 's/SQL_SERVER_CONNSTRING/'"${{ env.SQL_SERVER_CONNSTRING }}"'/g' appsettings.Development.json         
-        cat appsettings.Development.json
+    - name: Set Connection String
+      run: echo "::set-env name=CONNECTION_STRING::${{ secrets.SQL_SERVER_CONNSTRING }}"
+
+    - name: Update appsettings.json
+      run: jq --arg connStr "${{ env.CONNECTION_STRING }}" '.ConnectionStrings.AppNoticiasConnection = $connStr' appsettings.json > appsettings.json.tmp && mv appsettings.json.tmp appsettings.json
 
     - name: Build de imagem
       run: |
