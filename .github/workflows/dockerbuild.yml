@@ -21,18 +21,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Set Connection String
-      run: |
-        cd ${{ env.CAMINHO_PROJETO_WEBAPP }} 
-        echo "CONNECTION_STRING=${{ secrets.SQL_SERVER_CONNSTRING }}" >> $GITHUB_ENV
-
-    - name: Update appsettings.json
-      run: |
-        cd ${{ env.CAMINHO_PROJETO_WEBAPP }}
-        jq --arg connStr "${{ env.CONNECTION_STRING }}" '.ConnectionStrings.AppNoticiasConnection = $connStr' appsettings.json > appsettings.json.tmp && mv appsettings.json.tmp appsettings.json
-        jq --arg connStr "${{ env.CONNECTION_STRING }}" '.ConnectionStrings.IdentityConnection = $connStr' appsettings.json > appsettings.json.tmp && mv appsettings.json.tmp appsettings.json
-        cat appsettings.json
-
     - name: Build de imagem
       run: |
         cd ${{ env.CAMINHO_PROJETO_WEBAPP }}
